@@ -1,0 +1,30 @@
+.controller {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.question,
+.answer {
+  display: flex;
+  flex-direction: column;
+}
+.question input[type="text"] {
+  min-height: 80px;
+  border-radius: 5px;
+}
+.question input[type="text"] {
+  height: auto;
+}
+.answer {
+  min-height: 80px;
+  border-radius: 5px;
+}
+.save button[type="button"] {
+  width: 50px;
+  height: 40px;
+}
+.warning {
+  padding-top: 4px;
+  color: red;
+  font-size: 10px;
+}
