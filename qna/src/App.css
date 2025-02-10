@@ -4,8 +4,9 @@ body {
 
 .App {
   width: 400px;
-  height: 100vh;
+  /* height: 100vh; */
   margin: 0 auto;
-  background-color: antiquewhite;
+  padding: 20px;
+  background-color: #26ab56;
   border-radius: 5px;
 }
