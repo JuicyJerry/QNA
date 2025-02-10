@@ -8,7 +8,7 @@ const Card = ({ question, index, total }) => {
       <h3>Card</h3>
       <div className="card question">
         <h2>
-          Question
+          [Question]
           <span>
             {index} / {total}
           </span>
@@ -17,7 +17,7 @@ const Card = ({ question, index, total }) => {
         <button type="button">Answer</button>
       </div>
       <div className="card answer">
-        <h3>Answer</h3>
+        <h3>[Answer]</h3>
         <p>{question.answer}</p>
       </div>
     </div>
