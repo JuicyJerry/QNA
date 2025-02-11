@@ -1,7 +1,6 @@
 body {
   padding: 10px;
 }
-
 .App {
   width: 400px;
   /* height: 100vh; */
@@ -9,4 +8,21 @@ body {
   padding: 20px;
   background-color: #26ab56;
   border-radius: 5px;
+}
+.App h1 {
+  text-align: center;
+}
+.App .links {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+}
+.App .links a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 15px;
+}
+.App .links a.active {
+  text-decoration: underline;
+  font-weight: bold;
 }
