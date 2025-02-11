@@ -3,7 +3,14 @@ import Viewer from "./pages/Viewer";
 import Controller from "./pages/Controller";
 import Home from "./pages/Home";
 import Notfound from "./pages/Notfound";
-import { useState, useCallback, useReducer, useRef, useEffect } from "react";
+import {
+  useState,
+  useCallback,
+  useReducer,
+  useRef,
+  useEffect,
+  createContext,
+} from "react";
 import {
   Routes,
   Route,
@@ -46,6 +53,8 @@ function reudcer(state, action) {
       return state;
   }
 }
+
+export const QuestionsContext = createContext();
 
 function App() {
   const idRef = useRef(3);
@@ -96,43 +105,48 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1>Question And Answer</h1>
-      <div className="links">
-        <Link to={"/"} className={location.pathname === "/" ? "active" : ""}>
-          Home
-        </Link>
-        <Link
-          to={"/viewer"}
-          className={location.pathname === "/viewer" ? "active" : ""}
-        >
-          Viewer
-        </Link>
-        <Link
-          to={"/controller"}
-          className={location.pathname === "/controller" ? "active" : ""}
-        >
-          Controller
-        </Link>
+    <QuestionsContext.Provider
+      value={{
+        state,
+        total,
+        current,
+        setCurrent,
+        createDate,
+        updateData,
+        deleteData,
+        onClickButton,
+      }}
+    >
+      <div className="App">
+        <h1>Question And Answer</h1>
+        <div className="links">
+          <Link to={"/"} className={location.pathname === "/" ? "active" : ""}>
+            Home
+          </Link>
+          <Link
+            to={"/viewer"}
+            className={location.pathname === "/viewer" ? "active" : ""}
+          >
+            Viewer
+          </Link>
+          <Link
+            to={"/controller"}
+            className={location.pathname === "/controller" ? "active" : ""}
+          >
+            Controller
+          </Link>
+        </div>
+
+        {/* <button onClick={onNavigateButton}>Viewer 페이지 이동</button> */}
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/viewer" element={<Viewer />} />
+          <Route path="/controller" element={<Controller />} />
+          <Route path="*" element={<Notfound />}></Route>
+        </Routes>
       </div>
-
-      {/* <button onClick={onNavigateButton}>Viewer 페이지 이동</button> */}
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/viewer"
-          element={<Viewer data={state} current={current} total={total} />}
-        />
-        <Route
-          path="/controller"
-          element={
-            <Controller onClickButton={onClickButton} createDate={createDate} />
-          }
-        />
-        <Route path="*" element={<Notfound />}></Route>
-      </Routes>
-    </div>
+    </QuestionsContext.Provider>
   );
 }
 

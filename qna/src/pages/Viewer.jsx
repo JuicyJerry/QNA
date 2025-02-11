@@ -1,16 +1,17 @@
 import { useParams } from "react-router-dom";
 import Card from "./Card";
 import "./Viewer.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { QuestionsContext } from "../App";
 
-const Viewer = ({ data, total }) => {
+// const Viewer = ({ data, total }) => {
+const Viewer = () => {
+  const { state, total } = useContext(QuestionsContext);
+  console.log(state);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const params = useParams();
-  console.log(`Viewer: ${JSON.parse(JSON.stringify(params))}`);
   console.log(params);
-  console.log(`Viewer: ${JSON.parse(JSON.stringify(data))}`);
-  console.log(total);
-  console.log(data);
 
   const prevCard = () => {
     if (currentIndex > 0) {
@@ -19,7 +20,7 @@ const Viewer = ({ data, total }) => {
   };
 
   const nextCard = () => {
-    if (currentIndex < data.length - 1) {
+    if (currentIndex < state.length - 1) {
       setCurrentIndex((prev) => prev + 1);
     }
   };
@@ -27,8 +28,8 @@ const Viewer = ({ data, total }) => {
   return (
     <div className="viewer">
       <Card
-        question={data[currentIndex].content.question}
-        answer={data[currentIndex].content.answer}
+        question={state[currentIndex].content.question}
+        answer={state[currentIndex].content.answer}
         index={currentIndex + 1}
         total={total}
         prevCard={prevCard}

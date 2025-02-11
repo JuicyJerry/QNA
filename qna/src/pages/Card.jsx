@@ -6,7 +6,7 @@ const Card = ({ question, answer, index, total, prevCard, nextCard }) => {
   console.log(`Card: ${index}`);
   console.log(`Card: ${total}`);
   const [isFlipped, setIsFlipped] = useState(false);
-  const handleFlip = () => setIsFlipped((prev) => !prev);
+  const handleFlip = () => setIsFlipped((flip) => !flip);
 
   useEffect(() => {
     setIsFlipped(false);

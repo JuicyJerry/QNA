@@ -1,7 +1,9 @@
 import "./Controller.css";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
+import { QuestionsContext } from "../App";
 
-const Controller = ({ createDate, onClickButton }) => {
+const Controller = () => {
+  const { createDate, onClickButton } = useContext(QuestionsContext);
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
 

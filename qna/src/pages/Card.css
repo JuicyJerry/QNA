@@ -6,6 +6,8 @@
   border: 1px solid #000;
   border-radius: 4px;
   padding: 10px;
+  transition: all 1.3s ease-in-out;
+  transform: rotateY(0deg);
 }
 
 .card .question,
@@ -28,6 +30,7 @@
   display: flex;
   justify-content: space-between;
 }
-.card .flipped {
-  transform: rotateY(180deg);
+.card.flipped {
+  transform: rotateY(360deg);
+  transition: all 1.3s ease-in-out;
 }
