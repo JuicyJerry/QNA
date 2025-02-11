@@ -31,10 +31,8 @@ const Controller = ({ updateData, onClickButton }) => {
           rows={5}
           cols={33}
         ></textarea>
-        {answer.length < 5 ? (
+        {answer.length < 5 && (
           <span className="warning">5글자 이상 입력해주세요</span>
-        ) : (
-          <span></span>
         )}
       </div>
       <div className="save">
