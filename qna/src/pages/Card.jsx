@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./Card.css";
+// import "./Card.css";
 
 const Card = ({ question, answer, index, total, prevCard, nextCard }) => {
   console.log(`Card: ${question}`);
@@ -15,32 +15,51 @@ const Card = ({ question, answer, index, total, prevCard, nextCard }) => {
   return (
     <div
       onKeyDown={(e) => e.key === "Enter" && handleFlip()}
+      onClick={() => handleFlip()}
       tabIndex={0}
       className={`card ${isFlipped ? "flipped" : ""}`}
     >
-      <h3>Card</h3>
-      {isFlipped ? (
+      {/* <h3>Card</h3> */}
+      {total <= 0 ? (
+        <p>등록된 콘텐츠가 없습니다. 먼저 Controller에서 등록해주세요.</p>
+      ) : isFlipped ? (
         <div className="answer">
-          <p>[Answer]</p>
+          <h3>[Answer]</h3>
           <p>{answer}</p>
           <div className="flipButtons">
-            <button onClick={prevCard} type="button">
-              Prev
-            </button>
-            <button onClick={nextCard} type="button">
-              Next
-            </button>
+            {index > 1 && (
+              <button onClick={prevCard} type="button" name="prev">
+                Prev
+              </button>
+            )}
+            {index < total && (
+              <button onClick={nextCard} type="button" name="next">
+                Next
+              </button>
+            )}
           </div>
         </div>
       ) : (
-        <div onClick={handleFlip} className="question">
-          <p>
+        <div className="question">
+          <h3>
             [Question]
             <span>
               {index} / {total}
             </span>
-          </p>
+          </h3>
           <p>{question}</p>
+          <div className="flipButtons">
+            {index > 1 && (
+              <button onClick={prevCard} type="button" name="prev">
+                Prev
+              </button>
+            )}
+            {index < total && (
+              <button onClick={nextCard} type="button" name="next">
+                Next
+              </button>
+            )}
+          </div>
         </div>
       )}
     </div>

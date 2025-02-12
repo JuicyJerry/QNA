@@ -1,4 +1,3 @@
-import "./Controller.css";
 import { useState, useRef, useContext } from "react";
 import { QuestionsContext } from "../App";
 
