@@ -15,9 +15,9 @@ const List = () => {
         {total > 0 ? (
           state.map((element, index) => {
             return (
-              <li key={`list-${index}`}>
+              <li className={`list-${index}`} key={`list-${index}`}>
                 {/* <p>{element.id}</p> */}
-                <p>{element.content.question}</p>
+                <p className={`list-${index}`}>{element.content.question}</p>
                 <p>{element.content.answer}</p>
               </li>
             );

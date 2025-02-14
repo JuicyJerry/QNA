@@ -21,7 +21,7 @@ export const ListWrapper = styled.div`
     top: 10px;
     right: 10px;
   }
-  & .list ul li:first-child {
+  & .list ul li.list-0 {
     // margin-top: 50px;
   }
   & .list ul {
@@ -49,7 +49,7 @@ export const ListWrapper = styled.div`
     padding: 20px;
     position: relative;
   }
-  & .list ul li p:first-child::after {
+  & .list ul li p:nth-of-type(odd)::after {
     content: "|";
     display: inline-block;
     text-align: right;

@@ -50,7 +50,9 @@ const mockData = [
   },
 ];
 
-function reudcer(state, action) {
+function reducer(state, action) {
+  console.log("[reducer] state ===> ", state);
+  console.log("[reducer] action ===> ", action);
   switch (action.type) {
     case "CREATE":
       return [action.data, ...state];
@@ -60,6 +62,11 @@ function reudcer(state, action) {
       );
     case "DELETE":
       return state.filter((item) => item.id !== action.targetId);
+    case "LOGIN":
+      return {
+        ...state,
+        isLogin: action.isLogin,
+      };
     default:
       return state;
   }
@@ -68,10 +75,15 @@ function reudcer(state, action) {
 export const QuestionsContext = createContext();
 
 function App() {
+  const initialState = {
+    question: mockData,
+    isLogin: false,
+  };
   const idRef = useRef(3);
-  const [state, dispatch] = useReducer(reudcer, mockData);
+  const [state, dispatch] = useReducer(reducer, initialState);
   const [total, setTotal] = useState(0);
   const [current, setCurrent] = useState(0);
+  const [isLogin, setIsLogin] = useState(false);
   const location = useLocation();
   // const [data, setData] = useState([]);
 
@@ -82,6 +94,10 @@ function App() {
   useEffect(() => {
     onClickButton(mockData.length);
   }, [mockData]);
+
+  useEffect(() => {
+    console.log("[App]isLogin ===> ", initialState.isLogin);
+  }, [initialState.isLogin]);
 
   const createDate = useCallback((content) => {
     dispatch({
@@ -110,6 +126,14 @@ function App() {
     });
   }, []);
 
+  const loginUser = useCallback((userInfo) => {
+    dispatch({
+      type: "LOGIN",
+      isLogin: userInfo.isLogin,
+      // password: userInfo.password,
+    });
+  }, []);
+
   const nav = useNavigate();
   const onNavigateButton = () => {
     nav("/viewer");
@@ -125,6 +149,7 @@ function App() {
         createDate,
         updateData,
         deleteData,
+        loginUser,
         onClickButton,
       }}
     >

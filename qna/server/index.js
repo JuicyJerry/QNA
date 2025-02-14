@@ -7,6 +7,7 @@ const { User } = require("./models/User");
 const config = require("./config/key");
 const { auth } = require("./middleware/auth");
 
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -24,6 +25,10 @@ app.get("/", (req, res) => {
   res.send("Hello World! 새해복 많이 받으세요!!");
 });
 
+app.get("/api/hello", (req, res) => {
+  res.send("안녕하십니까 행님");
+});
+
 app.post("/api/users/register", async (req, res) => {
   try {
     // 회원가입 할 때 필요한 정보들을 client에서 가져오면
@@ -37,6 +42,8 @@ app.post("/api/users/register", async (req, res) => {
 });
 
 app.post("/api/users/login", (req, res) => {
+  console.log("[Server/index] req ===> ", req);
+
   // 1. 요청된 이메일을 데이터베이스에서 찾는다
   User.findOne({ email: req.body.email })
     .then((user) => {

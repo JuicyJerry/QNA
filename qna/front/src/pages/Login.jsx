@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Axios from "axios";
+import { QuestionsContext } from "../App";
 
-const Login = () => {
+const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { loginUser } = useContext(QuestionsContext);
 
   const onEmailHandler = (event) => {
     setEmail(event.currentTarget.value);
@@ -22,15 +24,33 @@ const Login = () => {
       password: password,
     };
 
-    Axios.post("/api/user/login", body)
+    // Axios.post("/api/users/login", body)
+    Axios.post("/api/users/login", body)
+      // Axios.post("http://localhost:5000/api/users/login", body)
       .then((response) => {
         console.log("[login] response ===> ", response);
+        if (response.paylaod.loginSuccess) {
+          loginUser({
+            isLogin: true,
+            message: "로그인 성공",
+          });
+          props.history.push("/");
+        } else {
+          loginUser({
+            isLogin: false,
+            message: "로그인 실패",
+          });
+          alert("Error");
+        }
       })
       .catch((err) => {
-        console.log(err);
+        console.log("login err ==> ", err);
+        loginUser({
+          isLogin: false,
+          message: "로그인 에러 발생",
+        });
       });
   };
-
   return (
     <div className="login">
       <form onSubmit={onSubmitHandler}>
