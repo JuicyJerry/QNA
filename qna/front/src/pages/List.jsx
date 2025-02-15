@@ -13,7 +13,7 @@ const List = () => {
       </p>
       <ul>
         {total > 0 ? (
-          state.map((element, index) => {
+          state.questions.map((element, index) => {
             return (
               <li className={`list-${index}`} key={`list-${index}`}>
                 {/* <p>{element.id}</p> */}

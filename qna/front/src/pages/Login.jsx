@@ -1,11 +1,13 @@
 import { useState, useContext } from "react";
 import Axios from "axios";
 import { QuestionsContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
-const Login = (props) => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { loginUser } = useContext(QuestionsContext);
+  const navigate = useNavigate();
 
   const onEmailHandler = (event) => {
     setEmail(event.currentTarget.value);
@@ -28,13 +30,12 @@ const Login = (props) => {
     Axios.post("/api/users/login", body)
       // Axios.post("http://localhost:5000/api/users/login", body)
       .then((response) => {
-        console.log("[login] response ===> ", response);
-        if (response.paylaod.loginSuccess) {
+        if (response.data.loginSuccess) {
           loginUser({
             isLogin: true,
             message: "로그인 성공",
           });
-          props.history.push("/");
+          navigate("/");
         } else {
           loginUser({
             isLogin: false,
@@ -51,6 +52,7 @@ const Login = (props) => {
         });
       });
   };
+
   return (
     <div className="login">
       <form onSubmit={onSubmitHandler}>

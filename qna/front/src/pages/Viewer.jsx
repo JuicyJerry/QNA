@@ -91,7 +91,7 @@ const Viewer = () => {
   };
 
   const nextCard = () => {
-    if (currentIndex < state.length - 1) {
+    if (currentIndex < state.questions.length - 1) {
       setCurrentIndex((prev) => prev + 1);
     }
   };
@@ -100,8 +100,8 @@ const Viewer = () => {
     <div className="viewer">
       <CardWrapper>
         <Card
-          question={state[currentIndex].content.question}
-          answer={state[currentIndex].content.answer}
+          question={state.questions[currentIndex].content.question}
+          answer={state.questions[currentIndex].content.answer}
           index={currentIndex + 1}
           total={total}
           prevCard={prevCard}
