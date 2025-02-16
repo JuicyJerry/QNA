@@ -58,7 +58,22 @@ function reducer(state, action) {
   console.log("[reducer] action ===> ", action);
   switch (action.type) {
     case "CREATE":
-      return [action.data, ...state];
+      // return {
+      //   ...state
+      //   userData: action.data,
+      // };
+      // return [...state.questions, action.data];
+      return {
+        ...state,
+        questions: [
+          ...state.questions,
+          {
+            id: action.data.id,
+            content: action.data.content,
+            isDone: action.data.isDone,
+          },
+        ],
+      };
     case "UPDATE":
       return state.map((item) =>
         item.id === action.targetId ? { ...item, isDone: !item.isDone } : item
@@ -92,6 +107,7 @@ export const QuestionsContext = createContext();
 function App() {
   const initialState = {
     questions: mockData,
+    // questions: [],
     isLogin: false,
   };
   const idRef = useRef(3);
@@ -219,12 +235,14 @@ function App() {
           >
             Controller
           </Link>
-          <Link
-            to={"/register"}
-            className={location.pathname === "/register" ? "active" : ""}
-          >
-            Register
-          </Link>
+          {!isLogin && (
+            <Link
+              to={"/register"}
+              className={location.pathname === "/register" ? "active" : ""}
+            >
+              Register
+            </Link>
+          )}
           {!isLogin ? (
             <Link
               to={"/login"}
