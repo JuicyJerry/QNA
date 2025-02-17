@@ -32,79 +32,13 @@ import {
 } from "./styles/Wrappers";
 import axios from "axios";
 import Auth from "./features/auth";
-// import { db } from "./data/db.json";
-
-const mockData = [
-  {
-    id: `q-2`,
-    content: {
-      question: "두번째 질문입니다",
-      answer: "두번째 대답입니다",
-    },
-    isDone: true,
-  },
-  {
-    id: `q-1`,
-    content: {
-      question: "첫번째 질문입니다",
-      answer: "첫번째 대답입니다",
-    },
-    isDone: true,
-  },
-];
-
-function reducer(state, action) {
-  console.log("[reducer] state ===> ", state);
-  console.log("[reducer] action ===> ", action);
-  switch (action.type) {
-    case "CREATE":
-      // return {
-      //   ...state
-      //   userData: action.data,
-      // };
-      // return [...state.questions, action.data];
-      return {
-        ...state,
-        questions: [
-          ...state.questions,
-          {
-            id: action.data.id,
-            content: action.data.content,
-            isDone: action.data.isDone,
-          },
-        ],
-      };
-    case "UPDATE":
-      return state.map((item) =>
-        item.id === action.targetId ? { ...item, isDone: !item.isDone } : item
-      );
-    case "DELETE":
-      return state.filter((item) => item.id !== action.targetId);
-    case "LOGIN":
-      return {
-        ...state,
-        isLogin: action.isLogin,
-      };
-    case "REGISTER":
-      return {
-        ...state,
-        isLogin: action.isLogin,
-      };
-    case "AUTH":
-      return {
-        ...state,
-        isLogin: action.isLogin,
-        isAuth: action.isAuth,
-        userData: action.data,
-      };
-    default:
-      return state;
-  }
-}
+import reducer from "./reducers/index";
+import data from "../public/data/mock.json";
 
 export const QuestionsContext = createContext();
 
 function App() {
+  const mockData = data;
   const initialState = {
     questions: mockData,
     // questions: [],
@@ -116,8 +50,8 @@ function App() {
   const [current, setCurrent] = useState(0);
   const [isLogin, setIsLogin] = useState(false);
   const location = useLocation();
-  // const [data, setData] = useState([]);
   const navigate = useNavigate();
+  // const [data, setData] = useState([]);
 
   const onClickButton = (value) => {
     setTotal(total + value);
@@ -131,57 +65,57 @@ function App() {
     console.log("[App]isLogin ===> ", state.isLogin);
   }, [state.isLogin]);
 
-  const createDate = useCallback((content) => {
-    console.log("[App/createDate] content ===> ", content);
+  // const createDate = useCallback((content) => {
+  //   console.log("[App/createDate] content ===> ", content);
 
-    dispatch({
-      type: "CREATE",
-      data: {
-        id: `q-${idRef.current++}`,
-        content: content,
-        isDone: true,
-      },
-    });
+  //   dispatch({
+  //     type: "CREATE",
+  //     data: {
+  //       id: `q-${idRef.current++}`,
+  //       content: content,
+  //       isDone: true,
+  //     },
+  //   });
 
-    // setData((prev) => [...prev, content]);
-  }, []);
+  //   // setData((prev) => [...prev, content]);
+  // }, []);
 
-  const updateData = useCallback((targetId) => {
-    dispatch({
-      type: "UPDATE",
-      targetId: targetId,
-    });
-  }, []);
+  // const updateData = useCallback((targetId) => {
+  //   dispatch({
+  //     type: "UPDATE",
+  //     targetId: targetId,
+  //   });
+  // }, []);
 
-  const deleteData = useCallback((targetId) => {
-    dispatch({
-      type: "DELETE",
-      targetId: targetId,
-    });
-  }, []);
+  // const deleteData = useCallback((targetId) => {
+  //   dispatch({
+  //     type: "DELETE",
+  //     targetId: targetId,
+  //   });
+  // }, []);
 
-  const loginUser = useCallback((userInfo) => {
-    dispatch({
-      type: "LOGIN",
-      isLogin: userInfo.isLogin,
-    });
-  }, []);
+  // const loginUser = useCallback((userInfo) => {
+  //   dispatch({
+  //     type: "LOGIN",
+  //     isLogin: userInfo.isLogin,
+  //   });
+  // }, []);
 
-  const registerUser = useCallback((userInfo) => {
-    dispatch({
-      type: "REGISTER",
-      isLogin: userInfo.isLogin,
-    });
-  }, []);
+  // const registerUser = useCallback((userInfo) => {
+  //   dispatch({
+  //     type: "REGISTER",
+  //     isLogin: userInfo.isLogin,
+  //   });
+  // }, []);
 
-  const authUser = useCallback((userInfo) => {
-    console.log("[authUser] userInfo ===> ", userInfo);
-    dispatch({
-      type: "AUTH",
-      isAuth: userInfo.isAuth,
-      isLogin: userInfo.isLogin,
-    });
-  }, []);
+  // const authUser = useCallback((userInfo) => {
+  //   console.log("[authUser] userInfo ===> ", userInfo);
+  //   dispatch({
+  //     type: "AUTH",
+  //     isAuth: userInfo.isAuth,
+  //     isLogin: userInfo.isLogin,
+  //   });
+  // }, []);
 
   const onClickHandler = () => {
     axios.get("/api/users/logout").then((response) => {
