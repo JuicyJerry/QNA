@@ -1,19 +1,12 @@
-import "./App.css";
-import Viewer from "./pages/Viewer";
-import Controller from "./pages/Controller";
+import { QuestionProvider } from "./_context/index";
 import Home from "./pages/Home";
 import List from "./pages/List";
+import Viewer from "./pages/Viewer";
+import Controller from "./pages/Controller";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Notfound from "./pages/Notfound";
-import {
-  useState,
-  useCallback,
-  useReducer,
-  useRef,
-  useEffect,
-  createContext,
-} from "react";
+import { useState } from "react";
 import {
   Routes,
   Route,
@@ -32,90 +25,17 @@ import {
 } from "./styles/Wrappers";
 import axios from "axios";
 import Auth from "./features/auth";
-import reducer from "./reducers/index";
-import data from "../public/data/mock.json";
-
-export const QuestionsContext = createContext();
 
 function App() {
-  const mockData = data;
-  const initialState = {
-    questions: mockData,
-    // questions: [],
-    isLogin: false,
-  };
-  const idRef = useRef(3);
-  const [state, dispatch] = useReducer(reducer, initialState);
   const [total, setTotal] = useState(0);
   const [current, setCurrent] = useState(0);
   const [isLogin, setIsLogin] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  // const [data, setData] = useState([]);
 
   const onClickButton = (value) => {
     setTotal(total + value);
   };
-
-  useEffect(() => {
-    onClickButton(mockData.length);
-  }, [mockData]);
-
-  useEffect(() => {
-    console.log("[App]isLogin ===> ", state.isLogin);
-  }, [state.isLogin]);
-
-  // const createDate = useCallback((content) => {
-  //   console.log("[App/createDate] content ===> ", content);
-
-  //   dispatch({
-  //     type: "CREATE",
-  //     data: {
-  //       id: `q-${idRef.current++}`,
-  //       content: content,
-  //       isDone: true,
-  //     },
-  //   });
-
-  //   // setData((prev) => [...prev, content]);
-  // }, []);
-
-  // const updateData = useCallback((targetId) => {
-  //   dispatch({
-  //     type: "UPDATE",
-  //     targetId: targetId,
-  //   });
-  // }, []);
-
-  // const deleteData = useCallback((targetId) => {
-  //   dispatch({
-  //     type: "DELETE",
-  //     targetId: targetId,
-  //   });
-  // }, []);
-
-  // const loginUser = useCallback((userInfo) => {
-  //   dispatch({
-  //     type: "LOGIN",
-  //     isLogin: userInfo.isLogin,
-  //   });
-  // }, []);
-
-  // const registerUser = useCallback((userInfo) => {
-  //   dispatch({
-  //     type: "REGISTER",
-  //     isLogin: userInfo.isLogin,
-  //   });
-  // }, []);
-
-  // const authUser = useCallback((userInfo) => {
-  //   console.log("[authUser] userInfo ===> ", userInfo);
-  //   dispatch({
-  //     type: "AUTH",
-  //     isAuth: userInfo.isAuth,
-  //     isLogin: userInfo.isLogin,
-  //   });
-  // }, []);
 
   const onClickHandler = () => {
     axios.get("/api/users/logout").then((response) => {
@@ -128,47 +48,36 @@ function App() {
     });
   };
 
+  const navLinks = [
+    { path: "/", label: "Home" },
+    { path: "/list", label: "List" },
+    { path: "/viewer", label: "Viewer" },
+    { path: "/controller", label: "Controller" },
+  ];
+
   return (
-    <QuestionsContext.Provider
+    <QuestionProvider
       value={{
-        state,
         total,
         current,
         setCurrent,
-        createDate,
-        updateData,
-        deleteData,
-        loginUser,
-        registerUser,
-        authUser,
         onClickButton,
         setIsLogin,
       }}
     >
       <div className="App">
         <h1>Question And Answer</h1>
-        <div className="links">
-          <Link to={"/"} className={location.pathname === "/" ? "active" : ""}>
-            Home
-          </Link>
-          <Link
-            to={"/list"}
-            className={location.pathname === "/list" ? "active" : ""}
-          >
-            List
-          </Link>
-          <Link
-            to={"/viewer"}
-            className={location.pathname === "/viewer" ? "active" : ""}
-          >
-            Viewer
-          </Link>
-          <Link
-            to={"/controller"}
-            className={location.pathname === "/controller" ? "active" : ""}
-          >
-            Controller
-          </Link>
+        <nav className="links">
+          {navLinks.map((link) => {
+            <Link
+              key={link.path}
+              to={link.path}
+              className={location.pathname === link.path ? "active" : ""}
+            >
+              {link.label}
+            </Link>;
+          })}
+
           {!isLogin && (
             <Link
               to={"/register"}
@@ -187,9 +96,7 @@ function App() {
           ) : (
             <button onClick={onClickHandler}>로그아웃</button>
           )}
-        </div>
-
-        {/* <button onClick={onNavigateButton}>Viewer 페이지 이동</button> */}
+        </nav>
 
         <Routes>
           <Route
@@ -262,72 +169,9 @@ function App() {
               </Auth>
             }
           />
-          {/* <Route
-            path="/"
-            element={Auth(
-              <HomeWrapper>
-                <Home />
-              </HomeWrapper>,
-              null
-            )}
-          />
-          <Route
-            path="/list"
-            element={Auth(
-              <ListWrapper>
-                <List />
-              </ListWrapper>,
-              true
-            )}
-          ></Route>
-          <Route
-            path="/viewer"
-            element={Auth(
-              <ViewerWrapper>
-                <Viewer />
-              </ViewerWrapper>,
-              true
-            )}
-          />
-          <Route
-            path="/controller"
-            element={Auth(
-              <ControllerWrapper>
-                <Controller />
-              </ControllerWrapper>,
-              true
-            )}
-          />
-          <Route
-            path="/login"
-            element={Auth(
-              <LoginWrapper>
-                <Login />
-              </LoginWrapper>,
-              false
-            )}
-          />
-          <Route
-            path="/register"
-            element={Auth(
-              <RegisterWrapper>
-                <Register />
-              </RegisterWrapper>,
-              false
-            )}
-          />
-          <Route
-            path="*"
-            element={Auth(
-              <NotfoundWrapper>
-                <Notfound />
-              </NotfoundWrapper>,
-              null
-            )}
-          /> */}
         </Routes>
       </div>
-    </QuestionsContext.Provider>
+    </QuestionProvider>
   );
 }
 

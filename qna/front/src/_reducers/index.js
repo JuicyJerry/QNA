@@ -1,8 +1,18 @@
+import {
+  CREATE,
+  UPDATE,
+  DELETE,
+  LOGIN,
+  AUTH,
+  REGISTER,
+} from "../_actions/index";
+
 export default function reducer(state, action) {
   console.log("[reducer] state ===> ", state);
   console.log("[reducer] action ===> ", action);
+
   switch (action.type) {
-    case "CREATE":
+    case CREATE:
       // return {
       //   ...state
       //   userData: action.data,
@@ -19,23 +29,23 @@ export default function reducer(state, action) {
           },
         ],
       };
-    case "UPDATE":
+    case UPDATE:
       return state.map((item) =>
         item.id === action.targetId ? { ...item, isDone: !item.isDone } : item
       );
-    case "DELETE":
+    case DELETE:
       return state.filter((item) => item.id !== action.targetId);
-    case "LOGIN":
+    case LOGIN:
       return {
         ...state,
         isLogin: action.isLogin,
       };
-    case "REGISTER":
+    case REGISTER:
       return {
         ...state,
         isLogin: action.isLogin,
       };
-    case "AUTH":
+    case AUTH:
       return {
         ...state,
         isLogin: action.isLogin,

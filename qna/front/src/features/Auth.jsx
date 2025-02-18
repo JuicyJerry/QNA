@@ -21,6 +21,7 @@ const Auth = ({ children, option, adminRoute = null }) => {
     axios.get("/api/users/auth").then((response) => {
       console.log("[auth] response ===> ", response);
       console.log("[auth] response ===> ", response.data.isAuth);
+
       // 로그인한 상태
       if (response.data.isAuth) {
         setIsLogin(true);
@@ -42,9 +43,12 @@ const Auth = ({ children, option, adminRoute = null }) => {
         }
       }
     });
-    // }, []); // useEffect가 안 타네 왜그러지?
-    // }, [authUser]); // useEffect가 안 타네 왜그러지?
-  }, [adminRoute, authUser, navigate, option, setIsLogin]); // 이 두 개가 구독되어야 동작함
+    // }, [adminRoute, authUser, navigate, option, setIsLogin]); // 이 네 개가 구독되어야 밑줄이 없어짐
+  }, [adminRoute, navigate, option]);
+  /**
+   * setIsLogin, authUser는 useContext로 가져온 상태 업데이트 함수이므로 변경 안 됨
+   * adminRoute, navigate, option 값에 따라, 리다이렉트 해야함
+   */
 
   return <>{children}</>;
 };
