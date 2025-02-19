@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import Axios from "axios";
-import { QuestionsContext } from "../App";
+import { QuestionsContext } from "../_context/QuestionProvider.jsx";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {

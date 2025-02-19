@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import Card from "./Card";
 import { useState, useContext } from "react";
-import { QuestionsContext } from "../App";
+import { QuestionsContext } from "../_context/QuestionProvider.jsx";
 import styled from "@emotion/styled";
 
 const CardWrapper = styled.div`
@@ -100,8 +100,8 @@ const Viewer = () => {
     <div className="viewer">
       <CardWrapper>
         <Card
-          question={state.questions[currentIndex].content.question}
-          answer={state.questions[currentIndex].content.answer}
+          question={state.questions[currentIndex]?.content.question}
+          answer={state.questions[currentIndex]?.content.answer}
           index={currentIndex + 1}
           total={total}
           prevCard={prevCard}

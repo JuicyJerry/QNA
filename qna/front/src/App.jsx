@@ -1,4 +1,4 @@
-import { QuestionProvider } from "./_context/index";
+import { QuestionProvider } from "./_context/QuestionProvider";
 import Home from "./pages/Home";
 import List from "./pages/List";
 import Viewer from "./pages/Viewer";
@@ -68,15 +68,15 @@ function App() {
       <div className="App">
         <h1>Question And Answer</h1>
         <nav className="links">
-          {navLinks.map((link) => {
+          {navLinks.map((link) => (
             <Link
               key={link.path}
               to={link.path}
               className={location.pathname === link.path ? "active" : ""}
             >
               {link.label}
-            </Link>;
-          })}
+            </Link>
+          ))}
 
           {!isLogin && (
             <Link

@@ -1,4 +1,4 @@
-import { QuestionsContext } from "../App";
+import { QuestionsContext } from "../_context/QuestionProvider.jsx";
 import { useContext } from "react";
 
 const List = () => {

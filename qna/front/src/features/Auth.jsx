@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react";
-import { QuestionsContext } from "../App";
+import { QuestionsContext } from "../_context/QuestionProvider.jsx";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
