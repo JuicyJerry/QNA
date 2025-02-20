@@ -6,6 +6,7 @@ import Controller from "./pages/Controller";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Notfound from "./pages/Notfound";
+import navigation from "./pages/navigation";
 import { useState } from "react";
 import {
   Routes,
@@ -23,37 +24,16 @@ import {
   RegisterWrapper,
   NotfoundWrapper,
 } from "./styles/Wrappers";
-import axios from "axios";
-import Auth from "./features/auth";
+import Auth from "./features/Auth";
 
 function App() {
   const [total, setTotal] = useState(0);
   const [current, setCurrent] = useState(0);
-  const [isLogin, setIsLogin] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
 
   const onClickButton = (value) => {
     setTotal(total + value);
   };
-
-  const onClickHandler = () => {
-    axios.get("/api/users/logout").then((response) => {
-      console.log(response.data);
-      if (response.data.logoutSuccess) {
-        navigate("/login");
-      } else {
-        alert("로그아웃 실패!");
-      }
-    });
-  };
-
-  const navLinks = [
-    { path: "/", label: "Home" },
-    { path: "/list", label: "List" },
-    { path: "/viewer", label: "Viewer" },
-    { path: "/controller", label: "Controller" },
-  ];
 
   return (
     <QuestionProvider
@@ -62,42 +42,12 @@ function App() {
         current,
         setCurrent,
         onClickButton,
-        setIsLogin,
+        // setIsLogin,
       }}
     >
       <div className="App">
         <h1>Question And Answer</h1>
-        <nav className="links">
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              className={location.pathname === link.path ? "active" : ""}
-            >
-              {link.label}
-            </Link>
-          ))}
-
-          {!isLogin && (
-            <Link
-              to={"/register"}
-              className={location.pathname === "/register" ? "active" : ""}
-            >
-              Register
-            </Link>
-          )}
-          {!isLogin ? (
-            <Link
-              to={"/login"}
-              className={location.pathname === "/login" ? "active" : ""}
-            >
-              Login
-            </Link>
-          ) : (
-            <button onClick={onClickHandler}>로그아웃</button>
-          )}
-        </nav>
-
+        <navigation />
         <Routes>
           <Route
             path="/"
